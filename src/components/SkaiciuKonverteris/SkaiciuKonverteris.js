@@ -58,7 +58,7 @@ const SkaiciuKonverteris = ({num}) => {
   
   
 
-  return(<div className='bendra m-4 p-4 fw-bold'>Bendra suma žodžiais: <span className='fw-normal'>{convert(num)} <bold>eur</bold></span> </div>
+  return(<div className='bendra m-4 p-4 fw-bold'>Bendra suma žodžiais: <span className='fw-normal'>{convert(num)} eur</span> </div>
 )}
 
 export default SkaiciuKonverteris;

@@ -4,29 +4,41 @@ import SkaiciuKonverteris from './components/SkaiciuKonverteris/SkaiciuKonverter
 
 function App() {
 
+  let skaiciai = ["0","1","2","3","4","5","6","7","8","9"];
+  
   let [suma, setSuma] = useState(0)
   let [pvm, setPvm] =useState(0)
   let [pvmS, setPvmS] = useState(0)
   let [tarifas, setTarifas] = useState(21)
 
   const numberChange = (target) => {
+    
+    if(target.value == ""){
+      target.value = 0;
+    }
 
-    target.value == 0 && setSuma(0) && setPvmS(0)&&setPvm(0)
+    if(!skaiciai.includes(target.value))
+      target.value = parseInt(target.value)
+
     if(target.name === 'bendra'){
       setPvmS(+target.value)
+      bendraSk(+target.value)
     }
-    if(target.name === 'suma')
+
+    if(target.name === 'suma'){
       setSuma(+target.value)
+      setPvm((+target.value / 100) * tarifas)
+      setPvmS(+target.value + ((+target.value / 100) * tarifas))
+    } 
   }
+
+  
   const selectorOnChange = (value) => {
-    setPvm(((suma / 100) * value).toFixed(2));
-    setPvmS((suma + ((suma / 100) * value)).toFixed(2));
+    setTarifas(value)
+    setPvm((suma / 100) * value);
+    setPvmS(suma + ((suma / 100) * value));
   }
-  const sumaSk = (value = 0) => {
-    setPvm(((value / 100) * tarifas).toFixed(2));
-    setPvmS((value + ((value / 100) * tarifas)).toFixed(2));
-    console.log(typeof pvmS)
-  }
+
   const bendraSk = (value) => {
     let cof = 0;
     if(tarifas == 21){
@@ -38,8 +50,8 @@ function App() {
     else {
       cof = 1.05;
     }
-    setPvm((value - (value / cof)).toFixed(2));
-    setSuma((value / cof).toFixed(2))
+    setPvm(value - (value / cof));
+    setSuma(value / cof)
   }
 
 
@@ -52,7 +64,7 @@ function App() {
         <div className='box d-flex justify-content-between'>
           <span className=''>PVM tarifas</span>
           <div className='col-8 '>
-            <select className='form-control' onChange={(e)=> {setTarifas(e.target.value); selectorOnChange(e.target.value)}}>
+            <select className='form-control' onChange={(e)=> {selectorOnChange(e.target.value)}}>
               <option value={21}>21%</option>
               <option value={9}>9%</option>
               <option value={5}>5%</option>
@@ -62,19 +74,19 @@ function App() {
         <div className='d-flex mt-3 justify-content-between'>
           <span className='me-3 '>Suma (be PVM)</span>
           <div className='col-8'>
-            <input className='form-control' name="suma" value={suma} onChange={(e) => {numberChange(e.target); sumaSk(+e.target.value)}}/>
+            <input className='form-control' name="suma" value={+suma.toFixed(2)} onChange={(e) => {numberChange(e.target)}}/>
           </div>
         </div>
         <div className='d-flex mt-3 justify-content-between'>
           <span className='me-3 '>PVM suma</span>
           <div className='col-8'>
-            <input className='form-control' disabled value={pvm}/>
+            <input className='form-control' disabled value={+pvm.toFixed(2)}/>
           </div>
         </div>
         <div className='d-flex mt-3 justify-content-between'>
           <span className='me-3 '> Bendra suma (su PVM)</span>
           <div className='col-8'>
-            <input className='form-control' name="bendra" value={pvmS} onChange={(e) => {numberChange(e.target); bendraSk(+e.target.value) }} />
+            <input className='form-control' name="bendra" value={+pvmS.toFixed(2)} onChange={(e) => numberChange(e.target)} />
           </div>
         </div>
       </div>
