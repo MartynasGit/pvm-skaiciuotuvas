@@ -1,0 +1,8 @@
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+body{
+  margin: 0;
+  background: linear-gradient(to right, rgb(201, 188, 78), rgb(126, 126, 241));
+  font-family: sans-serif;
+}
