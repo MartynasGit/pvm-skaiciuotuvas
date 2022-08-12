@@ -13,3 +13,8 @@
 .bendra{
   background-color: rgba(211, 211, 211, 0.527);
 }
+.copy{
+  position: absolute;
+  bottom: 20px;
+  left: 44%;
+}
