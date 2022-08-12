@@ -10,6 +10,7 @@ function App() {
   let [tarifas, setTarifas] = useState(21)
 
   const numberChange = (target) => {
+
     target.value == 0 && setSuma(0) && setPvmS(0)&&setPvm(0)
     if(target.name === 'bendra'){
       setPvmS(+target.value)
